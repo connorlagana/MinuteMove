@@ -9,10 +9,16 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        ReadyView()
+        VStack {
+            Spacer()
+                .frame(height: 100)
+            ReadyView()
+            HStack {
+                HomeCellView(text: "My Exercises", image: .init(systemName: "book.pages.fill"))
+                HomeCellView(text: "Achievements", image: .init(systemName: "star.fill"))
+            }
+            Spacer()
+                .frame(height: 100)
+        }
     }
-}
-
-#Preview {
-    HomeView()
 }

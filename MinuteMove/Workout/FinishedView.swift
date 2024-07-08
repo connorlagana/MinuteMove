@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct FinishedView: View {
+    @EnvironmentObject var viewModel: WorkoutViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Did you complete the workout?")
+            .font(.system(size: 32, weight: .bold))
+            .foregroundStyle(Color.minuteMovePurple)
+            .frame(width: 280, height: 120)
+            .padding()
     }
 }
 

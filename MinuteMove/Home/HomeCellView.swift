@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct HomeCellView: View {
+    let text: String
+    let image: Image
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            image
+                .resizable()
+                .scaledToFit()
+                .frame(height: 48)
+                .padding()
+            Text(text)
+                .font(.system(size: 24))
+        }
+        .frame(width: 160, height: 240)
+        .background(Color.minuteMoveBlue)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .foregroundStyle(.white)
+        .padding()
     }
-}
-
-#Preview {
-    HomeCellView()
 }
