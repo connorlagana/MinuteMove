@@ -177,26 +177,38 @@ class WorkoutViewModel: ObservableObject {
     }
     
     private func countWorkoutsPerMonth() {
-        var groupedItems = Dictionary(grouping: completedWorkouts) { (item) -> Date in
-            let calendar = Calendar.current
-            return calendar.startOfDay(for: item.timestamp)
-        }
-        
         let calendar = Calendar.current
-        var monthDict = [Int: Int]()
-        
-        for (key, val) in groupedItems {
-            let month = calendar.component(.month, from: key)
-            monthDict[month, default: 0] += val.count
-        }
+        var monthDict = [Date: [CompletedWorkout]]()
+        let today = Date()
+        var firstDay: Date = Date()
+        var lastDay: Date = Date(timeIntervalSince1970: 0)
         
         for i in 0..<12 {
-            if monthDict[i] == nil {
-                monthDict[i] = 0
+            if let date = calendar.date(byAdding: .month, value: -i, to: today),
+               let firstDateOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: date)) {
+                monthDict[firstDateOfMonth] = []
+                firstDay = min(firstDay, firstDateOfMonth)
+                lastDay = max(lastDay, firstDateOfMonth)
             }
         }
-
-        print(monthDict)
+        
+        var groupedItems = Dictionary(grouping: completedWorkouts) { (item) -> Date in
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month], from: item.timestamp)
+            return calendar.date(from: components) ?? Date()
+        }
+        
+        for (key, val) in groupedItems {
+            monthDict[key, default: []] += val
+        }
+        
+        self.currentRange = DateInterval(start: firstDay, end: lastDay)
+        
+        self.groupedCompletedWorkouts = monthDict
+        
+        self.groupedCompletedWorkoutsCount = monthDict.map { (key, value) in
+            CompletedWorkoutCount(date: key, count: value.count)
+        }
     }
     
     public func countWorkoutsPerDay() {
@@ -220,19 +232,15 @@ class WorkoutViewModel: ObservableObject {
             num = 12
         }
         let timeFrame = (0..<num).map { calendar.date(byAdding: .day, value: -$0, to: today)! }
-        currentRange = DateInterval(start: timeFrame.last ?? Date(), end: timeFrame.first ?? Date())
+        self.currentRange = DateInterval(start: timeFrame.last ?? Date(), end: timeFrame.first ?? Date())
         for day in timeFrame {
             if groupedItems[day] == nil {
                 groupedItems[day] = []
             }
         }
         self.groupedCompletedWorkouts = groupedItems
-
-//        return groupedItems.map { (key, value) in
-//            CompletedWorkoutCount(date: key, count: value.count)
-//        }
         
-        groupedCompletedWorkoutsCount = groupedItems.map { (key, value) in
+        self.groupedCompletedWorkoutsCount = groupedItems.map { (key, value) in
             CompletedWorkoutCount(date: key, count: value.count)
         }
     }

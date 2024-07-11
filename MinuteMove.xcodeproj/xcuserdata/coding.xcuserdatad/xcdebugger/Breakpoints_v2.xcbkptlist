@@ -14,8 +14,8 @@
             filePath = "MinuteMove/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
             landmarkName = "calculateAverageWorkoutCount()"
             landmarkType = "7">
          </BreakpointContent>
