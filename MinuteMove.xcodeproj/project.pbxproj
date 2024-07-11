@@ -22,6 +22,15 @@
 		1736D4E82C3C2B9D00F23987 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4E72C3C2B9D00F23987 /* WorkoutView.swift */; };
 		1736D4EA2C3C2C3600F23987 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4E92C3C2C3600F23987 /* TimerView.swift */; };
 		1736D4EC2C3C5ACA00F23987 /* FinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4EB2C3C5ACA00F23987 /* FinishedView.swift */; };
+		1736D4F02C3C62DA00F23987 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1736D4EF2C3C62DA00F23987 /* Lottie */; };
+		1736D4F32C3C656400F23987 /* congrats.json in Resources */ = {isa = PBXBuildFile; fileRef = 1736D4F22C3C656400F23987 /* congrats.json */; };
+		1736D4F62C3C748B00F23987 /* CalendarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4F52C3C748B00F23987 /* CalendarButton.swift */; };
+		1736D4F92C3C751B00F23987 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4F82C3C751B00F23987 /* ProfileButton.swift */; };
+		1736D4FB2C3C756C00F23987 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4FA2C3C756C00F23987 /* ProfileView.swift */; };
+		1736D4FD2C3C75D500F23987 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1736D4FC2C3C75D500F23987 /* CalendarView.swift */; };
+		17C941632C3E109A008BD281 /* PleaseComeBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C941622C3E109A008BD281 /* PleaseComeBackView.swift */; };
+		17C941652C3E2887008BD281 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C941642C3E2887008BD281 /* BarChartView.swift */; };
+		17C941672C3F2710008BD281 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C941662C3F2710008BD281 /* PickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +50,14 @@
 		1736D4E72C3C2B9D00F23987 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		1736D4E92C3C2C3600F23987 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		1736D4EB2C3C5ACA00F23987 /* FinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedView.swift; sourceTree = "<group>"; };
+		1736D4F22C3C656400F23987 /* congrats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = congrats.json; sourceTree = "<group>"; };
+		1736D4F52C3C748B00F23987 /* CalendarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarButton.swift; sourceTree = "<group>"; };
+		1736D4F82C3C751B00F23987 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
+		1736D4FA2C3C756C00F23987 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1736D4FC2C3C75D500F23987 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		17C941622C3E109A008BD281 /* PleaseComeBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleaseComeBackView.swift; sourceTree = "<group>"; };
+		17C941642C3E2887008BD281 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
+		17C941662C3F2710008BD281 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1736D4F02C3C62DA00F23987 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,10 +91,13 @@
 		1736D4C62C3B3EC500F23987 /* MinuteMove */ = {
 			isa = PBXGroup;
 			children = (
+				1736D4F12C3C655600F23987 /* LottieFiles */,
 				1736D4C72C3B3EC500F23987 /* MinuteMoveApp.swift */,
 				1736D4C92C3B3EC500F23987 /* ContentView.swift */,
 				1736D4E02C3B51E400F23987 /* Fonts.swift */,
 				1736D4DE2C3B50D600F23987 /* Colors.swift */,
+				1736D4F72C3C750E00F23987 /* Profile */,
+				1736D4F42C3C746E00F23987 /* Calendar */,
 				1736D4E42C3B58E700F23987 /* Workout */,
 				1736D4DB2C3B4FEE00F23987 /* Home */,
 				1736D4CB2C3B3EC500F23987 /* Item.swift */,
@@ -98,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				1736D4D92C3B4C7000F23987 /* ReadyView.swift */,
+				17C941622C3E109A008BD281 /* PleaseComeBackView.swift */,
 				1736D4DC2C3B500200F23987 /* HomeCellView.swift */,
 				1736D4D72C3B3FB400F23987 /* HomeView.swift */,
 			);
@@ -116,6 +138,34 @@
 			path = Workout;
 			sourceTree = "<group>";
 		};
+		1736D4F12C3C655600F23987 /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				1736D4F22C3C656400F23987 /* congrats.json */,
+			);
+			path = LottieFiles;
+			sourceTree = "<group>";
+		};
+		1736D4F42C3C746E00F23987 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				1736D4F52C3C748B00F23987 /* CalendarButton.swift */,
+				17C941642C3E2887008BD281 /* BarChartView.swift */,
+				1736D4FC2C3C75D500F23987 /* CalendarView.swift */,
+				17C941662C3F2710008BD281 /* PickerView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		1736D4F72C3C750E00F23987 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				1736D4F82C3C751B00F23987 /* ProfileButton.swift */,
+				1736D4FA2C3C756C00F23987 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,6 +182,9 @@
 			dependencies = (
 			);
 			name = MinuteMove;
+			packageProductDependencies = (
+				1736D4EF2C3C62DA00F23987 /* Lottie */,
+			);
 			productName = MinuteMove;
 			productReference = 1736D4C42C3B3EC500F23987 /* MinuteMove.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +213,9 @@
 				Base,
 			);
 			mainGroup = 1736D4BB2C3B3EC500F23987;
+			packageReferences = (
+				1736D4EE2C3C62D900F23987 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 1736D4C52C3B3EC500F23987 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,6 +232,7 @@
 			files = (
 				1736D4D12C3B3EC600F23987 /* Preview Assets.xcassets in Resources */,
 				1736D4CE2C3B3EC600F23987 /* Assets.xcassets in Resources */,
+				1736D4F32C3C656400F23987 /* congrats.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,16 +244,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				1736D4E82C3C2B9D00F23987 /* WorkoutView.swift in Sources */,
+				17C941652C3E2887008BD281 /* BarChartView.swift in Sources */,
 				1736D4E12C3B51E400F23987 /* Fonts.swift in Sources */,
 				1736D4E62C3C167E00F23987 /* StartView.swift in Sources */,
+				1736D4FD2C3C75D500F23987 /* CalendarView.swift in Sources */,
+				1736D4F62C3C748B00F23987 /* CalendarButton.swift in Sources */,
 				1736D4EC2C3C5ACA00F23987 /* FinishedView.swift in Sources */,
 				1736D4E32C3B58E400F23987 /* WorkoutViewModel.swift in Sources */,
+				17C941672C3F2710008BD281 /* PickerView.swift in Sources */,
+				17C941632C3E109A008BD281 /* PleaseComeBackView.swift in Sources */,
 				1736D4CA2C3B3EC500F23987 /* ContentView.swift in Sources */,
 				1736D4DA2C3B4C7000F23987 /* ReadyView.swift in Sources */,
+				1736D4FB2C3C756C00F23987 /* ProfileView.swift in Sources */,
 				1736D4EA2C3C2C3600F23987 /* TimerView.swift in Sources */,
 				1736D4D82C3B3FB400F23987 /* HomeView.swift in Sources */,
 				1736D4DF2C3B50D600F23987 /* Colors.swift in Sources */,
 				1736D4DD2C3B500200F23987 /* HomeCellView.swift in Sources */,
+				1736D4F92C3C751B00F23987 /* ProfileButton.swift in Sources */,
 				1736D4CC2C3B3EC500F23987 /* Item.swift in Sources */,
 				1736D4C82C3B3EC500F23987 /* MinuteMoveApp.swift in Sources */,
 			);
@@ -404,6 +468,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1736D4EE2C3C62D900F23987 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1736D4EF2C3C62DA00F23987 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1736D4EE2C3C62D900F23987 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1736D4BC2C3B3EC500F23987 /* Project object */;
 }

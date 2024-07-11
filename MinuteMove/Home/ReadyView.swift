@@ -9,15 +9,15 @@ import SwiftUI
 
 struct ReadyView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State var shouldPresntStartView = false
+    @EnvironmentObject var viewModel: WorkoutViewModel
     var body: some View {
         VStack {
             Text("Ready for a MinuteMove?")
                 .foregroundStyle(colorScheme == .light ? .black : .white)
                 .font(.system(size: 28))
                 .padding()
-            Button {
-                shouldPresntStartView.toggle()
+            NavigationLink() {
+                StartView(viewModel: viewModel)
             } label: {
                 Text("Let's Go!")
                     .frame(width: 140, height: 50)
@@ -28,8 +28,5 @@ struct ReadyView: View {
             }
             Spacer()
         }
-        .fullScreenCover(isPresented: $shouldPresntStartView, content: {
-            StartView(viewModel: WorkoutEnvironment.shared.workoutViewModel)
-        })
     }
 }

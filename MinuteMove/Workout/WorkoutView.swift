@@ -16,6 +16,11 @@ struct WorkoutView: View {
                     .environmentObject(viewModel)
             } else {
                 Text("You will have 1 minute to complete this exercise.")
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundStyle(Color.gray)
+                    .frame(width: 280, height: 120)
+                    .padding(4)
+                    .animation(.easeOut, value: viewModel.workoutBottomText)
                 TimerView()
                     .environmentObject(viewModel)
                 WorkoutBottomTextView()
@@ -23,6 +28,7 @@ struct WorkoutView: View {
             }
         }
         .animation(.default, value: viewModel.timerDidReachEnd)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

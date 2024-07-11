@@ -12,7 +12,7 @@ import SwiftData
 struct MinuteMoveApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            CompletedWorkout.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -26,7 +26,7 @@ struct MinuteMoveApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-            HomeView()
+            HomeView(modelContext: sharedModelContainer.mainContext)
         }
         .modelContainer(sharedModelContainer)
     }

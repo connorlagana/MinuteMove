@@ -7,20 +7,80 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 class WorkoutViewModel: ObservableObject {
     @Published var currentProgress: Double = 0
     @Published var timerCount = 60.0
     @Published var workoutBottomText = "Let's Go!"
     @Published var timerDidReachEnd = false
+    @Published var finished: Bool = false
+    @Published var isReadyForNextWorkout: Bool = true
+    @Published var currentRange: DateInterval = DateInterval()
+    @Published var averageCount: Int = 0
+    @Published var selectedPickerString = "Week"
+    
     var workouts = [Workout]()
-    private var lastWorkout: Workout? = nil
+    var lastWorkout: Workout? = nil
+    var completedWorkouts = [CompletedWorkout]()
+    var groupedCompletedWorkoutsCount: [CompletedWorkoutCount] = []
+    
+    private var modelContext: ModelContext
     private var timer = Timer()
     private var totalTime = 60.0
     private var timerIsOn = false
+    private var groupedCompletedWorkouts: [Date: [CompletedWorkout]] = [:]
+    private let lastWorkoutTimestampKey = "lastWorkoutTimestampKey"
+    private var lastWorkoutTimestamp: Date? {
+        get {
+            UserDefaults.standard.object(forKey: lastWorkoutTimestampKey) as? Date
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: lastWorkoutTimestampKey)
+        }
+    }
     
-    init() {
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
         addWorkouts()
+        fetchCompletedWorkouts()
+    }
+    
+    public func getWorkoutsFor() -> [CompletedWorkout] {
+
+        return completedWorkouts.filter { item in
+            !item.isDeleted
+        }
+    }
+    
+    public func checkIfReadyForNextWorkout() {
+        if Date() > lastWorkoutTimestamp?.addingTimeInterval(60 * 60) ?? Date(timeIntervalSince1970: 0) {
+            isReadyForNextWorkout = true
+        } else {
+            isReadyForNextWorkout = false
+        }
+    }
+    
+    public func getTimeToComeback() -> String {
+        let date = lastWorkoutTimestamp?.addingTimeInterval(60 * 60) ?? Date()
+        let calendar = Calendar.current
+        var hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        let meridiemIndicator = hour > 12 ? "PM" : "AM"
+        hour = hour > 12 ? hour - 12 : hour
+        return "\(hour):\(minute) \(meridiemIndicator)"
+    }
+    
+    func fetchCompletedWorkouts() {
+        do {
+            let descriptor = FetchDescriptor<CompletedWorkout>(sortBy: [SortDescriptor(\.timestamp)])
+            let workouts = try modelContext.fetch(descriptor)
+            completedWorkouts = workouts.filter { item in
+                !item.isDeleted
+            }
+        } catch {
+            print("Fetch failed")
+        }
     }
     
     public func startWorkout() {
@@ -39,8 +99,42 @@ class WorkoutViewModel: ObservableObject {
         } else {
             lastWorkout = tempWorkout
         }
+        
+        lastWorkoutTimestamp = Date()
+        isReadyForNextWorkout = false
 
         return lastWorkout
+    }
+    
+    public func runDidNotFinishSequence() {
+        
+    }
+    
+    public func runDidFinishSequence(workout: CompletedWorkout) {
+        finished = true
+        modelContext.insert(workout)
+    }
+    
+    public func getDate() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    public func addItem() {
+        withAnimation {
+            let newItem = CompletedWorkout(name: "Test", timestamp: Date())
+            modelContext.insert(newItem)
+        }
+    }
+    
+    public func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(completedWorkouts[index])
+            }
+        }
     }
     
     @objc private func timerDidGoOff() {
@@ -81,6 +175,79 @@ class WorkoutViewModel: ObservableObject {
         workouts.append(w4)
         workouts.append(w5)
     }
+    
+    private func countWorkoutsPerMonth() {
+        var groupedItems = Dictionary(grouping: completedWorkouts) { (item) -> Date in
+            let calendar = Calendar.current
+            return calendar.startOfDay(for: item.timestamp)
+        }
+        
+        let calendar = Calendar.current
+        var monthDict = [Int: Int]()
+        
+        for (key, val) in groupedItems {
+            let month = calendar.component(.month, from: key)
+            monthDict[month, default: 0] += val.count
+        }
+        
+        for i in 0..<12 {
+            if monthDict[i] == nil {
+                monthDict[i] = 0
+            }
+        }
+
+        print(monthDict)
+    }
+    
+    public func countWorkoutsPerDay() {
+        if selectedPickerString == "Year" {
+            countWorkoutsPerMonth()
+            return
+        }
+        var groupedItems = Dictionary(grouping: completedWorkouts) { (item) -> Date in
+            let calendar = Calendar.current
+            return calendar.startOfDay(for: item.timestamp)
+        }
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let num: Int
+        switch selectedPickerString {
+        case "Week":
+            num = 7
+        case "Month":
+            num = 30
+        default:
+            num = 12
+        }
+        let timeFrame = (0..<num).map { calendar.date(byAdding: .day, value: -$0, to: today)! }
+        currentRange = DateInterval(start: timeFrame.last ?? Date(), end: timeFrame.first ?? Date())
+        for day in timeFrame {
+            if groupedItems[day] == nil {
+                groupedItems[day] = []
+            }
+        }
+        self.groupedCompletedWorkouts = groupedItems
+
+//        return groupedItems.map { (key, value) in
+//            CompletedWorkoutCount(date: key, count: value.count)
+//        }
+        
+        groupedCompletedWorkoutsCount = groupedItems.map { (key, value) in
+            CompletedWorkoutCount(date: key, count: value.count)
+        }
+    }
+    
+    func calculateAverageWorkoutCount() {
+        let totalEntries = groupedCompletedWorkouts.count
+        guard totalEntries > 0 else { return }
+
+        let totalWorkoutCount = groupedCompletedWorkouts.reduce(0) { (sum, entry) -> Int in
+            return sum + entry.value.count
+        }
+
+        let averageWorkoutCount = Double(totalWorkoutCount) / Double(totalEntries)
+        averageCount = Int(round(averageWorkoutCount))
+    }
 }
 
 struct Workout {
@@ -88,11 +255,19 @@ struct Workout {
     let image: Image
 }
 
-class WorkoutEnvironment: NSObject {
-    static let shared = WorkoutEnvironment()
-
-    let workoutViewModel: WorkoutViewModel
-    override init() {
-        workoutViewModel = WorkoutViewModel()
+@Model
+class CompletedWorkout {
+    let name: String
+    let timestamp: Date
+    
+    init(name: String, timestamp: Date) {
+        self.name = name
+        self.timestamp = timestamp
     }
+}
+
+struct CompletedWorkoutCount: Identifiable {
+    var id = UUID()
+    var date: Date
+    var count: Int
 }
